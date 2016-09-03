@@ -1,0 +1,200 @@
+INIT:                                                                                                                                                     
+   dcl list makevars;                                                                                                                                     
+                                                                                                                                                          
+   submit continue;                                                                                                                                       
+      proc sql noprint;                                                                                                                                   
+      create view makeqry as                                                                                                                              
+         select distinct make                                                                                                                             
+         from Vehicles.vehicles                                                                                                                           
+         order by make desc;                                                                                                                              
+      quit;                                                                                                                                               
+   endsubmit;                                                                                                                                             
+                                                                                                                                                          
+   nlevels = 0;                                                                                                                                           
+   makedata=open('makeqry', 'I');                                                                                                                         
+                                                                                                                                                          
+   if (makedata > 0) then do;                                                                                                                             
+        makevars = makelist();                                                                                                                            
+        rc = lvarlevel(makedata, 'make', nlevels, makevars);                                                                                              
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   makecbo.items = makevars;                                                                                                                              
+   rc = close(makedata);                                                                                                                                  
+return;                                                                                                                                                   
+                                                                                                                                                          
+                                                                                                                                                          
+makecbo:                                                                                                                                                  
+   dcl char makevar;                                                                                                                                      
+   dcl list modelvars;                                                                                                                                    
+   dcl list engvars;                                                                                                                                      
+   dcl list transvars;                                                                                                                                    
+   dcl list fuelvars;                                                                                                                                     
+                                                                                                                                                          
+   if makecbo.selectedItem ne ' ' then do;                                                                                                                
+      makevar = makecbo.selectedItem;                                                                                                                     
+                                                                                                                                                          
+      * MODEL CBO;                                                                                                                                        
+      submit continue;                                                                                                                                    
+         proc sql noprint;                                                                                                                                
+         create view modelqry as                                                                                                                          
+            select distinct model                                                                                                                         
+            from Vehicles.vehicles                                                                                                                        
+            where make = '&makevar'                                                                                                                       
+            order by model desc;                                                                                                                          
+         quit;                                                                                                                                            
+      endsubmit;                                                                                                                                          
+                                                                                                                                                          
+      nlevels = 0;                                                                                                                                        
+      modeldata=open('modelqry', 'I');                                                                                                                    
+                                                                                                                                                          
+      if (modeldata > 0) then do;                                                                                                                         
+          modelvars = makelist();                                                                                                                         
+          rc = lvarlevel(modeldata, 'model', nlevels, modelvars);                                                                                         
+      end;                                                                                                                                                
+                                                                                                                                                          
+      modelcbo.items = modelvars;                                                                                                                         
+      rc = close(modeldata);                                                                                                                              
+                                                                                                                                                          
+                                                                                                                                                          
+      * ENGINE CBO;                                                                                                                                       
+      submit continue;                                                                                                                                    
+         proc sql noprint;                                                                                                                                
+         create view engqry as                                                                                                                            
+            select distinct engId                                                                                                                         
+            from Vehicles.vehicles                                                                                                                        
+            where make = '&makevar'                                                                                                                       
+            order by engId desc;                                                                                                                          
+         quit;                                                                                                                                            
+      endsubmit;                                                                                                                                          
+                                                                                                                                                          
+      nlevels = 0;                                                                                                                                        
+      engdata=open('engqry', 'I');                                                                                                                        
+                                                                                                                                                          
+      if (engdata > 0) then do;                                                                                                                           
+          engvars = makelist();                                                                                                                           
+          rc = lvarlevel(engdata, 'engId', nlevels, engvars);                                                                                             
+      end;                                                                                                                                                
+                                                                                                                                                          
+      engcbo.items = engvars;                                                                                                                             
+      rc = close(engdata);                                                                                                                                
+                                                                                                                                                          
+                                                                                                                                                          
+      * TRANSMISSION CBO;                                                                                                                                 
+      submit continue;                                                                                                                                    
+         proc sql noprint;                                                                                                                                
+         create view transqry as                                                                                                                          
+            select distinct trany                                                                                                                         
+            from Vehicles.vehicles                                                                                                                        
+            where make = '&makevar'                                                                                                                       
+            order by trany desc;                                                                                                                          
+         quit;                                                                                                                                            
+      endsubmit;                                                                                                                                          
+                                                                                                                                                          
+      nlevels = 0;                                                                                                                                        
+      transdata=open('transqry', 'I');                                                                                                                    
+                                                                                                                                                          
+      if (transdata > 0) then do;                                                                                                                         
+          transvars = makelist();                                                                                                                         
+          rc = lvarlevel(transdata, 'trany', nlevels, transvars);                                                                                         
+      end;                                                                                                                                                
+                                                                                                                                                          
+      transcbo.items = transvars;                                                                                                                         
+      rc = close(transdata);                                                                                                                              
+                                                                                                                                                          
+                                                                                                                                                          
+      * FUEL TYPE CBO;                                                                                                                                    
+      submit continue;                                                                                                                                    
+         proc sql noprint;                                                                                                                                
+         create view fuelqry as                                                                                                                           
+            select distinct fueltype                                                                                                                      
+            from Vehicles.vehicles                                                                                                                        
+            where make = '&makevar'                                                                                                                       
+            order by fueltype desc;                                                                                                                       
+         quit;                                                                                                                                            
+      endsubmit;                                                                                                                                          
+                                                                                                                                                          
+      nlevels = 0;                                                                                                                                        
+      fueldata=open('fuelqry', 'I');                                                                                                                      
+                                                                                                                                                          
+      if (fueldata > 0) then do;                                                                                                                          
+          fuelvars = makelist();                                                                                                                          
+          rc = lvarlevel(fueldata, 'fueltype', nlevels, fuelvars);                                                                                        
+      end;                                                                                                                                                
+                                                                                                                                                          
+      fuelcbo.items = fuelvars;                                                                                                                           
+      rc = close(fueldata);                                                                                                                               
+                                                                                                                                                          
+   end;                                                                                                                                                   
+                                                                                                                                                          
+return;                                                                                                                                                   
+                                                                                                                                                          
+                                                                                                                                                          
+btnOutput:                                                                                                                                                
+   dcl char fpath;                                                                                                                                        
+   dcl char strfilter;                                                                                                                                    
+                                                                                                                                                          
+   fpath = "C:\Path\To\Output\File.csv";                                                                                  
+   strfilter = "1 = 1";                                                                                                                                   
+                                                                                                                                                          
+   if makecbo.selectedItem ne ' ' then do;                                                                                                                
+      strfilter = strfilter || " AND make='"|| makecbo.selectedItem ||"'";                                                                                
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   if modelcbo.selectedItem ne ' ' then do;                                                                                                               
+      strfilter = strfilter || " AND model='"|| modelcbo.selectedItem ||"'";                                                                              
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   if yearstarttxt.text ne ' ' and yearendtxt.text ne ' ' then do;                                                                                        
+      strfilter = strfilter || " AND year BETWEEN "|| yearstarttxt.text ||" AND "||  yearendtxt.text;                                                     
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   if engcbo.selectedItem ne ' ' then do;                                                                                                                 
+      strfilter = strfilter || " AND engId="|| engcbo.selectedItem;                                                                                       
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   if transcbo.selectedItem ne ' ' then do;                                                                                                               
+      strfilter = strfilter || " AND trany='"|| transcbo.selectedItem ||"'";                                                                              
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   if fuelcbo.selectedItem ne ' ' then do;                                                                                                                
+      strfilter = strfilter || " AND fueltype='"|| fuelcbo.selectedItem ||"'";                                                                            
+   end;                                                                                                                                                   
+                                                                                                                                                          
+   submit continue;                                                                                                                                       
+      proc sql noprint;                                                                                                                                   
+      create view guireport as                                                                                                                            
+         SELECT Vehicles.Make, Vehicles.Model, Vehicles.Year,                                                                                             
+                Vehicles.EngId, Vehicles.Trany, Vehicles.FuelType,                                                                                        
+                Avg(Vehicles.barrels08) AS BarrelsAvg, Avg(Vehicles.city08) AS CityMPGAvg,                                                                
+                Avg(Vehicles.comb08) AS CombinedMPGAvg, Avg(Vehicles.highway08) AS HighwayMPGAvg,                                                         
+                Avg(Vehicles.fuelCost08) AS FuelCostAvg                                                                                                   
+         FROM Vehicles.Vehicles                                                                                                                           
+         WHERE &strfilter                                                                                                                                 
+         GROUP BY Vehicles.make, Vehicles.model, Vehicles.Year,                                                                                           
+                  Vehicles.engId, Vehicles.trany, Vehicles.fuelType;                                                                                      
+        quit;                                                                                                                                             
+                                                                                                                                                          
+        proc export                                                                                                                                       
+            data = Work.guireport                                                                                                                         
+            outfile = "&fpath"                                                                                                                            
+            dbms = csv replace;                                                                                                                           
+        run;                                                                                                                                              
+   endsubmit;                                                                                                                                             
+                                                                                                                                                          
+   dcl list commandlist;                                                                                                                                  
+   commandlist=makelist();                                                                                                                                
+   commandlist=insertc(commandlist,'Successfully outputted queried data to csv.',1);                                                                      
+                                                                                                                                                          
+   dcl char command;                                                                                                                                      
+   command = messagebox(commandlist,'I','O');                                                                                                             
+   refresh;                                                                                                                                               
+return;                                                                                                                                                   
+                                                                                                                                                          
+                                                                                                                                                          
+term:                                                                                                                                                     
+  rc = dellist(makevars);                                                                                                                                 
+  rc = dellist(modelvars);                                                                                                                                
+  rc = dellist(engvars);                                                                                                                                  
+  rc = dellist(transvars);                                                                                                                                
+  rc = dellist(fuelvars);                                                                                                                                 
+return;

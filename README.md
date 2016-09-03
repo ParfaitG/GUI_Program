@@ -8,7 +8,7 @@ Using the U.S. Department of Energy fuel economy data of vehicle makes and model
 
 REQUIREMENTS
 
-* **JAVA 1.8+**: Abstract Window Toolkit (AWT)/Swing, sqlite-jdbc
+* **JAVA 1.8+**: awt/swing, sqlite-jdbc
 * **PHP 5.4+**: php-gtk2
 * **Python 3+**: no additional modules
 * **R 3.2+**: gWidgets2, gWidgets2tcltk, RSQLite packages

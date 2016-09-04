@@ -12,6 +12,6 @@ REQUIREMENTS
 * **PHP 5.4+**: php-gtk2
 * **Python 3+**: no additional modules
 * **R 3.2+**: gWidgets2, gWidgets2tcltk, RSQLite packages
-* **SAS 9.2+**: SAS/AF (catalog/frame/scl), attached catalog.sas7bcat
+* **SAS 9.2+**: SAS/AF (catalog/frame/scl), SQLite3 ODBC driver, attached catalog.sas7bcat
 * **MS Access 2007+**: SQLite3 ODBC driver
 * **MS Excel 2007+**: SQLite3 ODBC driver

@@ -36,13 +36,6 @@ Private Sub RunOutput_Click()
              & " GROUP BY Vehicles.make, Vehicles.model, Vehicles.Year," _
              & "          Vehicles.engId, Vehicles.trany, Vehicles.fuelType;"
     
-    ' DELETE TEMP QUERY
-    For Each qdef In db.QueryDefs
-        If qdef.Name = "VehiclesReport_Sub" Then
-            db.Execute "DROP TABLE " & qdef.Name, dbFailOnError
-        End If
-    Next qdef
-    
     ' SUBSET VEHICLES REPORT
     Set qdef = db.CreateQueryDef("", strSQL)
     

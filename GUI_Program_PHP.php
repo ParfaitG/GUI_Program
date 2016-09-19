@@ -3,7 +3,7 @@
 function dbData($sql, $param) {
     $cbolist = []; 
     try{        
-        $conn = new PDO("sqlite:D:/Freelance Work/Sandbox/GUI_PROGRAM/DATA/vehicles.db");        
+        $conn = new PDO("sqlite:C:/Path/To/Working/Directory/vehicles.db");        
         
         $STH = $conn->prepare($sql);
         $STH->bindParam(1, $param, PDO::PARAM_STR, 100);
@@ -252,7 +252,7 @@ class mainWindow extends GtkWindow {
         }
         
         try {
-            $conn = new PDO("sqlite:D:/Freelance Work/Sandbox/GUI_PROGRAM/DATA/vehicles.db");
+            $conn = new PDO("sqlite:C:/Path/To/Working/Directory/vehicles.db");
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             // PREPARE SQL STATEMENT

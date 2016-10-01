@@ -31,13 +31,11 @@ class mainWindow extends GtkWindow {
         
         $num = 0;
         
-        //$window = new GtkWindow();
         $this->set_title('Reports Menu');
         $this->connect_simple('destroy', array( 'Gtk', 'main_quit'));
         $this->set_size_request(375,350);
         
-        $tbl = new GtkTable(9, 2);
-        //$tbl->set_homogeneous(True);
+        $tbl = new GtkTable(9, 2);        
         $this->add($tbl);
         
         // IMAGE
@@ -132,8 +130,7 @@ class mainWindow extends GtkWindow {
         // BUTTON OUTPUT
         $btnOutput = new GtkButton('Output Report');
         $tbl->attach($btnOutput, 1, 2, 8, 9);
-        
-        //$makecbo->connect('changed', array($this, 'on_selection_changed'));
+                
         $makecbo->connect('changed', array($this, 'on_selection_changed'), $modelcbo, $engcbo, $transcbo, $fuelcbo);
         $btnOutput->connect('clicked', array($this, 'signal_clicked'), $makecbo, $modelcbo, $yearStarttxt, $yearEndtxt, $engcbo, $transcbo, $fuelcbo);
        
